@@ -1,22 +1,6 @@
 import productsData from "../../data/products.json";
 import type { Product, ProductSection } from "../models/Product";
-
-const CATEGORY_LABELS: Record<string, string> = {
-  machine_sorter: "Optical Sorters",
-  machine_dryer: "Dryers",
-  machine_roller: "Roller Machines",
-  machine_die_casting: "Die Casting Machines",
-};
-
-function getCategoryLabel(category: string): string {
-  return (
-    CATEGORY_LABELS[category] ||
-    category
-      .replace("machine_", "")
-      .replace(/_/g, " ")
-      .replace(/\b\w/g, (c) => c.toUpperCase())
-  );
-}
+import { getCategoryLabel } from "../../utils/categoryUtils";
 
 export function getAllProducts(): ProductSection[] {
   const grouped = productsData.reduce<Record<string, Product[]>>((acc, p) => {
