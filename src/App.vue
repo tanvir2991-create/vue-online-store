@@ -1,22 +1,31 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import HeaderBar from "@/components/layout/HeaderBar.vue";
 </script>
-
 <template>
-<h1>Root</h1>
+      <HeaderBar />
+
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+#app {
+  font-family: Arial, sans-serif;
+  background-color: #fafafa;
+  min-height: 100vh;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+#app {
+  padding-top: 68px; /* leave space for fixed header */
+  min-height: 100vh;
+  box-sizing: border-box;
+  overflow-x: hidden; /* horizontal scroll prevention */
 }
 </style>
