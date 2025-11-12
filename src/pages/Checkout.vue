@@ -2,6 +2,11 @@
   <div class="checkout-page">
     <h2>Checkout</h2>
 
+    <!-- Clear Cart Button -->
+    <div v-if="cart.items.length" class="clear-cart-container">
+      <button class="clear-cart-btn" @click="clearCart">Clear Cart</button>
+    </div>
+
     <div v-if="cart.items.length" class="cart-list">
       <div v-for="(item, index) in cart.items" :key="index" class="cart-item">
         <div class="cart-left">
@@ -13,7 +18,10 @@
         </div>
 
         <div class="cart-right">
-          <div class="cart-price">x{{ item.price }} <span class="remove-btn" @click="removeItem(index)">X</span></div>
+          <div class="cart-price">
+            x{{ item.price }}
+            <span class="remove-btn" @click="removeItem(index)">X</span>
+          </div>
         </div>
       </div>
     </div>
@@ -33,13 +41,18 @@ import { useCartStore } from "@/core/store/cartStore";
 const cart = useCartStore();
 
 function removeItem(index: number) {
-  cart.items.splice(index, 1); 
+  cart.items.splice(index, 1);
+}
+
+// Clear all items from cart
+function clearCart() {
+  cart.items = [];
 }
 </script>
 
 <style scoped>
 .checkout-page {
-  max-width: 900px; 
+  max-width: 900px;
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -50,6 +63,27 @@ h2 {
   font-size: 1.8rem;
 }
 
+/* Clear Cart Button */
+.clear-cart-container {
+  text-align: right;
+  margin-bottom: 12px;
+}
+
+.clear-cart-btn {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.clear-cart-btn:hover {
+  background-color: #e63946;
+}
+
+/* Cart list */
 .cart-list {
   display: flex;
   flex-direction: column;
@@ -61,7 +95,7 @@ h2 {
   justify-content: space-between;
   align-items: center;
   padding: 12px 0;
-  border-bottom: 1px solid #e0e0e0; 
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .cart-left {
