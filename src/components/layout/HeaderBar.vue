@@ -1,37 +1,25 @@
 <template>
   <header class="header-bar">
+    <!-- Left: Logo / Home -->
     <div class="header-left" @click="goHome">
       <img src="/logo.svg" alt="Buhler Logo" class="logo" />
     </div>
 
+    <!-- Center: Date & Time -->
     <div class="header-center">
       <span class="date-time">{{ formattedDateTime }}</span>
     </div>
 
+    <!-- Right: Cart -->
     <div class="header-right" @click="goToCart">
-      <svg
-          class="cart-icon"
-          xmlns="http://www.w3.org/2000/svg"
-          width="22"
-          height="22"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.293 2.707A1 1 0 007 17h10a1 1 0 00.894-.553L21 9M7 13L5.4 5M7 21a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z"
-          />
-        </svg>
+      <img src="/cart_icon.svg" alt="Cart" class="cart-icon" />
       <span>({{ cartItemCount }})</span>
     </div>
   </header>
 </template>
 
 <script setup lang="ts">
-import { ref,computed,  onMounted } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import { useCartStore } from "@/core/store/cartStore";
 import { useRouter } from "vue-router";
 
@@ -39,6 +27,8 @@ const store = useCartStore();
 const router = useRouter();
 
 const formattedDateTime = ref("");
+
+let intervalId: number;
 
 function updateDateTime() {
   formattedDateTime.value = new Date().toLocaleString("en-IN", {
@@ -48,7 +38,11 @@ function updateDateTime() {
 
 onMounted(() => {
   updateDateTime();
-  setInterval(updateDateTime, 1000);
+  intervalId = window.setInterval(updateDateTime, 1000);
+});
+
+onUnmounted(() => {
+  clearInterval(intervalId);
 });
 
 const cartItemCount = computed(() => store.count);
@@ -74,6 +68,9 @@ function goToCart() {
   padding: 0 24px;
   box-sizing: border-box;
   font-family: Arial, sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .header-left {
@@ -104,4 +101,12 @@ function goToCart() {
   height: 28px;
 }
 
+.header-bar {
+  position: fixed; /* makes it stay on top */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 68px; /* same as your header height */
+  z-index: 999;  /* stay above content */
+}
 </style>

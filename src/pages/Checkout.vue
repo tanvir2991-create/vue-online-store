@@ -53,7 +53,7 @@ function clearCart() {
 <style scoped>
 .checkout-page {
   max-width: 900px;
-  margin: 0 auto;
+  margin: auto;
   padding: 20px;
   font-family: Arial, sans-serif;
 }

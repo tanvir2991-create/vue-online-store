@@ -8,6 +8,7 @@ body {
   font-family: "Inter", sans-serif;
   color: var(--text-color);
   background-color: #f9f9f9;
+
 }
 
 h1, h2, h3, h4, h5, h6, p, span, label {
@@ -27,4 +28,10 @@ button {
 
 button:hover {
   background-color: #007a5f;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* prevent horizontal scroll */
 }
